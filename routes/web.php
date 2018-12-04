@@ -19,6 +19,10 @@ Route::group(['middleware' => 'checkuser'],
 			Route::put('/outlet/updateMenu' , 'OutletController@updatemenu');
 			Route::delete('/outlet/deleteMenu' , 'OutletController@deletemenu');
 
+			Route::get('/outlet/order' , 'OutletController@order');
+			Route::put('/outlet/confirmOrder' , 'OutletController@confirmOrder');
+			Route::post('/pemesanan' , 'HomeController@pemesanan');
+
 		});
 
 

@@ -68,9 +68,15 @@
                with font-awesome or any other icon font library -->
           
           <li class="nav-item">
-            <a href="{{ url('outlet')}}" class="nav-link active">
+            <a href="{{ url('outlet')}}" class="nav-link">
               <i class="nav-icon fa fa-list"></i>
               <p>List Menu</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url('outlet/order')}}" class="nav-link">
+              <i class="nav-icon fa fa-arrow-circle-down"></i>
+              <p>Ordering</p>
             </a>
           </li>
           <li class="nav-item">
