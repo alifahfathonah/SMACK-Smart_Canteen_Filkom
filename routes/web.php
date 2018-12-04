@@ -10,6 +10,11 @@ Route::group(['middleware' => 'checkuser'],
 			Route::post('/admin/add_user', 'AdminController@add_user');
 			Route::put('/admin/edit_user', 'AdminController@edit_user');
 
+			Route::get('/outlet' , 'OutletController@menu');
+			Route::post('/outlet/addMenu' , 'OutletController@addmenu');
+			Route::put('/outlet/updateMenu' , 'OutletController@updatemenu');
+			Route::delete('/outlet/deleteMenu' , 'OutletController@deletemenu');
+
 		});
 
 
