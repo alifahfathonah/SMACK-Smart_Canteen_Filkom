@@ -20,3 +20,7 @@ Route::group(['middleware' => 'checkuser'],
 
 Route::get('/login', 'LoginController@login');
 Route::post('/loginCheck', 'LoginController@loginCheck');
+
+
+Route::get('/', 'HomeController@home');
+Route::get('/product_detail/{id}', 'HomeController@product_detail');
