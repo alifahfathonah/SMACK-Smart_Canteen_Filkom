@@ -10,24 +10,24 @@ class AdminController extends Controller
 {
     public function outlet(){
         $admin = User::find(auth()->id())->first();
-    	$user = User::where(['level' => 'outlet'])->get();
-    	return view('admin/content_outlet',['user' => $user, 'admin' => $admin]);
+        $user = User::where(['level' => 'outlet'])->orderBy("id","DESC")->get();
+        return view('admin/content_outlet',['user' => $user, 'admin' => $admin]);
     }
     public function add_user(Request $Request){
-    	$file = $Request->file('photo');
-    	$foto = $file->getClientOriginalName();
+        $file = $Request->file('photo');
+        $foto = $file->getClientOriginalName();
 
-    	$data = [
-    		"username" => $Request->username,
-    		"email" => $Request->email,
-    		"password" => bcrypt($Request->password),
-    		"level" => "outlet",
-    		"photo" => $foto
-    	];
+        $data = [
+            "username" => $Request->username,
+            "email" => $Request->email,
+            "password" => bcrypt($Request->password),
+            "level" => "outlet",
+            "photo" => $foto
+        ];
 
-    	User::create($data);
-    	$file->move('foto_user', $file->getClientOriginalName());
-    	$notif = [
+        User::create($data);
+        $file->move('foto_user', $file->getClientOriginalName());
+        $notif = [
             'message' => 'Input Data Success',
             'alert-type' => 'success'
         ];
@@ -86,6 +86,24 @@ class AdminController extends Controller
         User::find($request->id)->delete();
         $notif = [
             'message' => 'Delete Data Success',
+            'alert-type' => 'error'
+        ];
+
+        return back()->with($notif);
+    }
+    public function confirm_user(Request $request){
+        User::where("id",$request->id)->update(["status"=>"confirm"]);
+        $notif = [
+            'message' => 'Confirm Data Success',
+            'alert-type' => 'success'
+        ];
+
+        return back()->with($notif);
+    }
+    public function reject_user(Request $request){
+        User::where("id",$request->id)->update(["status"=>"reject"]);
+        $notif = [
+            'message' => 'Reject Data Success',
             'alert-type' => 'error'
         ];
 

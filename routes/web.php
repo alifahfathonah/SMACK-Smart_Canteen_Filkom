@@ -10,6 +10,10 @@ Route::group(['middleware' => 'checkuser'],
 			Route::post('/admin/add_user', 'AdminController@add_user');
 			Route::put('/admin/edit_user', 'AdminController@edit_user');
 
+			// smack 1.1
+			Route::put('/admin/confirm_user', 'AdminController@confirm_user');
+			Route::put('/admin/reject_user', 'AdminController@reject_user');
+
 			Route::get('/outlet' , 'OutletController@menu');
 			Route::post('/outlet/addMenu' , 'OutletController@addmenu');
 			Route::put('/outlet/updateMenu' , 'OutletController@updatemenu');
