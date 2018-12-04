@@ -61,6 +61,12 @@
 								<span class="icon-bar"></span>
 							</button>
 						</div>
+						<div class="mainmenu pull-left">
+							<ul class="nav navbar-nav collapse navbar-collapse">
+								<li><a href="{{ url('/') }}">Home</a></li>
+								<li><a href="{{ url('/register')}}">Register</a></li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>

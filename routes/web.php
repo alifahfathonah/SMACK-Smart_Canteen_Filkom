@@ -22,5 +22,9 @@ Route::get('/login', 'LoginController@login');
 Route::post('/loginCheck', 'LoginController@loginCheck');
 
 
+// smack 1.1
+Route::get('/register', 'LoginController@register');
+Route::post('/input_register', 'LoginController@input_register');
+
 Route::get('/', 'HomeController@home');
 Route::get('/product_detail/{id}', 'HomeController@product_detail');
