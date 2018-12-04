@@ -5,32 +5,38 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Menu;
 use App\User;
+use App\Pemesanan;
 
 class OutletController extends Controller
 {
     public function menu(){
         // pindah ke model
-    	$user = User::where(['id' => auth()->id()])->first();
-    	$menu = Menu::where(['user_id' => auth()->id()] )->get();
-    	return view('outlet/content_menu', ["user" => $user, "menu" => $menu]);
+        $menu = Menu::where(['user_id' => auth()->id()] )->get();
+        return view('outlet/content_menu', compact('menu'));
+    }
+
+    public function order(){
+        // pindah ke model
+        $pemesanan = Pemesanan::where(['outlet' => auth()->user()->username] )->get();
+        return view('outlet/order', compact('pemesanan'));
     }
 
     public function addmenu(Request $request){
-    	$file = $request->file('photo');
-    	$name = $request->name;
+        $file = $request->file('photo');
+        $name = $request->name;
         $price = $request->price;
         $desc = $request->description;
-    	$stock = $request->stock;
-    	$user_id = auth()->id();
-    	$foto = $file->getClientOriginalName();
-    	
-    	Menu::create([
+        $stock = $request->stock;
+        $user_id = auth()->id();
+        $foto = $file->getClientOriginalName();
+        
+        Menu::create([
             "user_id" => $user_id,
-    		"name" => $name,
+            "name" => $name,
             "price" => $price,
-    		"description" => $desc,
+            "description" => $desc,
             "stock" => $stock,
-    		"photo" => $foto
+            "photo" => $foto
         ]);
         $file->move('upload', $file->getClientOriginalName());
 
@@ -38,7 +44,7 @@ class OutletController extends Controller
             'message' => 'Input Data Success',
             'alert-type' => 'success'
         ];
-    	return back()->with($notif);
+        return back()->with($notif);
     }
 
     public function updatemenu(Request $request){
@@ -70,6 +76,27 @@ class OutletController extends Controller
         
         $notif = [
             'message' => 'Update Data Success',
+            'alert-type' => 'success'
+        ];
+        return back()->with($notif);
+    }
+
+    public function confirmOrder(Request $request){
+        $data_pemesanan = [
+            "status" => "confirm"
+        ];
+        $menu = Menu::where("id",$request->menu_id)->first();
+        $stock = $menu->stock;
+        $sisa = $stock - $request->jumlah;
+        $data_menu = [
+            "stock" => $sisa
+        ];
+        
+        Pemesanan::where("id",$request->id)->update($data_pemesanan);
+        Menu::where("id",$request->menu_id)->update($data_menu);
+
+        $notif = [
+            'message' => 'Confirm Ordering Success',
             'alert-type' => 'success'
         ];
         return back()->with($notif);
