@@ -35,7 +35,7 @@ class LoginController extends Controller
                 ];
                 return redirect(url('admin/outlet'))->with($notif);
             }
-            else{
+            elseif ($user->level == "outlet") {
                 if ($user->status == "confirm") {
                     $notif = [
                         'message' => 'Login Success',
@@ -59,6 +59,12 @@ class LoginController extends Controller
                     return redirect(url('login'))->with($notif);
                 }
                 
+            }else{
+                    $notif = [
+                        'message' => 'Login Success',
+                        'alert-type' => 'success'
+                    ];
+                    return redirect(url('/'))->with($notif);
             }
         }else{
                 $notif = [
@@ -84,7 +90,7 @@ class LoginController extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'level' => "outlet",
+            'level' => $request->level,
             'photo' => $foto
         ];
         User::create($data);
