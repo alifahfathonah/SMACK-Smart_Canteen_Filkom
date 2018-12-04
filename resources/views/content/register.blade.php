@@ -12,7 +12,7 @@
 	    				<div class="status alert alert-success" style="display: none"></div>
 				    	<form id="main-contact-form" action="{{url('input_register')}}" enctype="multipart/form-data" class="contact-form row" name="contact-form" method="post">
 				            <div class="form-group col-md-12">
-				                <input type="text" name="username" class="form-control" placeholder="Name of Your Outlet">
+				                <input type="text" name="username" class="form-control" placeholder="Username or Name of Your Outlet">
 		                        @if($errors->has('username'))
 		                          <div class="alert alert-danger" role="alert"> {{$errors->first('username')}} </div>
 		                        @endif
@@ -34,6 +34,13 @@
 		                        @if($errors->has('confirm_password'))
 		                          <div class="alert alert-danger" role="alert"> {{$errors->first('confirm_password')}} </div>
 		                        @endif
+				            </div>
+				            <div class="form-group col-md-12">
+				            	<label>Level : </label>
+				            	<select name="level" class="form-control">
+				            		<option value="outlet">Outlet</option>
+				            		<option value="member">Member</option>
+				            	</select>
 				            </div>
 				            <div class="form-group col-md-12">
 				                <label>Upload Photo : <input type="file" name="photo" ></label>
