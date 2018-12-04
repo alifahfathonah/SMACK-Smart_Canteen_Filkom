@@ -35,6 +35,7 @@
                       <th>Foto</th>
                       <th>Username</th>
                       <th>E-mail</th>
+                      <th>Status</th>
                     </tr>
                   </thead>
 
@@ -56,9 +57,26 @@
                       </td>
 
                       <td>
+                        {{$user->status}}
+                      </td>
+
+                      <td>
+
+                        @if($user->status == "new")
+
+                        <button onclick="confirm('{{$user->id}}')" class="btn btn-primary"><span class="fa fa-check"></span></button>
+                        <button onclick="reject('{{$user->id}}')" class="btn btn-danger"><span class="fa fa-times"></span></button>
+
+                        @elseif($user->status == "reject")
+
+                        <button onclick="hapus('{{$user->id}}')" class="btn btn-danger"><span class="fa fa-trash"></span></button>
+
+                        @else
 
                         <button onclick="edit('{{$user->id}}','{{$user->username}}','{{$user->email}}')" class="btn btn-warning"><span class="fa fa-pencil"></span></button>
                         <button onclick="hapus('{{$user->id}}')" class="btn btn-danger"><span class="fa fa-trash"></span></button>
+
+                        @endif
                       </td>
                     
                     </tr>
@@ -205,6 +223,68 @@
       <!-- akhir pop up -->
 
 
+       <div class="container">
+          <!-- Modal -->
+          <div class="modal fade" id="confirm">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="myModalLabel">Confirmation !</h4>
+                </div>
+                <div class="modal-body">
+                  
+                  <form name="form_confirm" action="{{ url('admin/confirm_user')}}" method="post" enctype="multipart/form-data">
+                    <div class="col-md-12">
+
+                      <input type="hidden" name="id"></div>
+                    <p>Confirm This Account ? </p>
+                      <br>
+                    <div class="modal-footer">
+                      <input type="button" class="btn btn-default" data-dismiss="modal" value="Close">
+                      <input type="submit" class="btn btn-primary" value="Submit">
+                    </div>
+                    {{csrf_field()}}
+                    <input type="hidden" name="_method" value="PUT">
+                  </form>
+                </div>
+              </div><!--modal-content-->
+            </div><!--modal-dialog-->
+          </div><!--modal-->
+      </div><!--container-->
+      <!-- akhir pop up -->
+
+
+       <div class="container">
+          <!-- Modal -->
+          <div class="modal fade" id="reject">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="myModalLabel">Rejection !</h4>
+                </div>
+                <div class="modal-body">
+                  
+                  <form name="form_reject" action="{{ url('admin/reject_user')}}" method="post" enctype="multipart/form-data">
+                    <div class="col-md-12">
+
+                      <input type="hidden" name="id"></div>
+                    <p>Reject This Account ? </p>
+                      <br>
+                    <div class="modal-footer">
+                      <input type="button" class="btn btn-default" data-dismiss="modal" value="Close">
+                      <input type="submit" class="btn btn-danger" value="Submit">
+                    </div>
+                    {{csrf_field()}}
+                    <input type="hidden" name="_method" value="PUT">
+                  </form>
+                </div>
+              </div><!--modal-content-->
+            </div><!--modal-dialog-->
+          </div><!--modal-->
+      </div><!--container-->
+      <!-- akhir pop up -->
+
+
 
       <!-- Fungsi Untuk menampilkan PopUp -->
       <script>
@@ -226,6 +306,18 @@
             {
                 document.forms['form2']['id'].value=id;
                 $('#hapus').modal('show');
+            }
+              
+          function confirm(id)
+            {
+                document.forms['form_confirm']['id'].value=id;
+                $('#confirm').modal('show');
+            }
+              
+          function reject(id)
+            {
+                document.forms['form_reject']['id'].value=id;
+                $('#reject').modal('show');
             }
       </script>
 
